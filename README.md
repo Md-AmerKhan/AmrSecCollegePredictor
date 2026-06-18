@@ -1,1 +1,1 @@
-# AmrSecCollegePtedictor
+# AmrSecCollegePredictor
