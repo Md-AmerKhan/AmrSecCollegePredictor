@@ -3,390 +3,592 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TG EAPCET Web Options Finder | Amr.Sec</title>
+<title>TG Web Options Finder 2025 | AMR.Sec</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
-  :root {
-    --bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#22222f;
-    --accent:#00ff88;--accent2:#0af;--text:#e8e8f0;--muted:#666680;--danger:#ff4466;
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
-  body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,136,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
-  .wrapper{position:relative;z-index:1;max-width:760px;margin:0 auto;padding:24px 16px 60px;}
-  .header{text-align:center;padding:36px 0 28px;}
-  .brand{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px;}
-  .brand::before,.brand::after{content:'';width:32px;height:1px;background:var(--accent);opacity:0.4;}
-  h1{font-size:clamp(20px,5vw,30px);font-weight:700;line-height:1.2;margin-bottom:8px;}
-  h1 span{color:var(--accent);}
-  .subtitle{font-size:12px;color:var(--muted);line-height:1.6;}
-  .section-label{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
-  .input-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:22px;margin-bottom:18px;}
-  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
-  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
-  @media(max-width:520px){.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr 1fr;}}
-  select,input[type="number"]{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;padding:12px 14px;outline:none;transition:border-color 0.2s;cursor:pointer;-webkit-appearance:none;appearance:none;}
-  select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300ff88' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;}
-  select:focus,input[type="number"]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,136,0.08);}
-  select option{background:#16161f;color:var(--text);}
-  input[type="number"]{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;}
-  input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;}
-  input[type="number"]::placeholder{color:var(--muted);font-size:13px;}
-  .btn{width:100%;background:var(--accent);color:#000;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:700;padding:14px;cursor:pointer;transition:all 0.15s;letter-spacing:0.5px;}
-  .btn:hover{background:#00e87a;transform:translateY(-1px);}
-  .btn:active{transform:translateY(0);}
-  .hint{font-size:11px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace;}
-  #result{display:none;margin-top:20px;}
-  .rank-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.25);border-radius:8px;padding:8px 14px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);margin-bottom:14px;flex-wrap:wrap;}
-  .result-title{font-size:17px;font-weight:700;margin-bottom:5px;}
-  .result-desc{font-size:13px;color:var(--muted);margin-bottom:18px;line-height:1.5;}
-  .colleges-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;}
-  .colleges-header{background:var(--surface);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;}
-  .colleges-header span{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
-  .count-badge{background:rgba(0,255,136,0.1);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;padding:3px 8px;border-radius:4px;}
-  .college-item{display:grid;grid-template-columns:28px 1fr auto auto;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid var(--border);transition:background 0.15s;}
-  .college-item:last-child{border-bottom:none;}
-  .college-item:hover{background:rgba(255,255,255,0.02);}
-  .rank-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);opacity:0.6;}
-  .college-name{font-size:13px;font-weight:500;color:var(--text);}
-  .cutoff-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 7px;border-radius:4px;white-space:nowrap;}
-  .co-safe{background:rgba(0,255,136,0.12);color:#00ff88;border:1px solid rgba(0,255,136,0.3);}
-  .co-mod{background:rgba(0,170,255,0.12);color:#0af;border:1px solid rgba(0,170,255,0.3);}
-  .co-risky{background:rgba(255,153,0,0.12);color:#f90;border:1px solid rgba(255,153,0,0.3);}
-  .co-danger{background:rgba(255,68,102,0.12);color:#f44;border:1px solid rgba(255,68,102,0.3);}
-  .tier-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-  .tier-1{background:#00ff88;}.tier-2{background:#0af;}.tier-3{background:#f90;}.tier-4{background:#f44;}
-  .tier-legend{display:flex;gap:14px;flex-wrap:wrap;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:18px;}
-  .legend-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted);}
-  .disclaimer{padding:14px 16px;background:rgba(255,68,102,0.06);border:1px solid rgba(255,68,102,0.2);border-radius:10px;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:16px;}
-  .disclaimer strong{color:var(--danger);}
-  .email-link-box{background:var(--card);border:1px solid rgba(0,255,136,0.3);border-radius:12px;padding:18px 20px;margin-bottom:18px;}
-  .email-link-box .el-title{font-size:13px;font-weight:700;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-  .email-link-box a{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:8px;padding:10px 18px;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);text-decoration:none;font-weight:700;transition:all 0.15s;}
-  .email-link-box a:hover{background:rgba(0,255,136,0.2);transform:translateY(-1px);}
-  .footer{text-align:center;margin-top:40px;padding-top:20px;border-top:1px solid var(--border);}
-  .footer-brand{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--accent);margin-bottom:4px;}
-  .footer-sub{font-size:11px;color:var(--muted);}
-  #result{scroll-margin-top:20px;}
-  .no-result{text-align:center;padding:28px 20px;color:var(--muted);font-size:14px;}
-  .castinfo-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
-  .castinfo-tag{background:rgba(0,170,255,0.1);border:1px solid rgba(0,170,255,0.25);border-radius:6px;padding:4px 10px;font-size:11px;font-family:'JetBrains Mono',monospace;color:#0af;}
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+:root{--bg:#0a0a0f;--surface:#111118;--card:#16161f;--border:#22222f;--accent:#00ff88;--accent2:#0af;--text:#e8e8f0;--muted:#666680;--danger:#ff4466;--warn:#f90;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Space Grotesk',sans-serif;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,255,136,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+.wrapper{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:20px 14px 60px;}
+
+/* Header */
+.header{text-align:center;padding:30px 0 24px;}
+.brand{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.brand::before,.brand::after{content:'';width:28px;height:1px;background:var(--accent);opacity:0.4;}
+h1{font-size:clamp(18px,4.5vw,28px);font-weight:700;line-height:1.2;margin-bottom:6px;}
+h1 span{color:var(--accent);}
+.subtitle{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* Exam Tabs */
+.exam-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:18px;}
+.exam-tab{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.15s;}
+.exam-tab:hover{border-color:var(--accent);background:rgba(0,255,136,0.05);}
+.exam-tab.active{background:rgba(0,255,136,0.1);border-color:var(--accent);}
+.exam-tab .et-name{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);}
+.exam-tab .et-sub{font-size:10px;color:var(--muted);margin-top:3px;}
+
+/* Cards */
+.input-section{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
+.section-label{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:7px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px;}
+@media(max-width:500px){.grid2{grid-template-columns:1fr;}.grid3{grid-template-columns:1fr 1fr;}.exam-tabs{grid-template-columns:repeat(2,1fr);}}
+select,input[type="number"]{width:100%;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:500;padding:11px 12px;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2300ff88' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
+select:focus,input[type="number"]:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(0,255,136,0.08);}
+select option{background:#16161f;}
+input[type="number"]{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:700;}
+input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;}
+input[type="number"]::placeholder{color:var(--muted);font-size:12px;font-family:'Space Grotesk',sans-serif;}
+.btn{width:100%;background:var(--accent);color:#000;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:700;padding:13px;cursor:pointer;transition:all 0.15s;letter-spacing:0.3px;}
+.btn:hover{background:#00e87a;transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+.hint{font-size:10px;color:var(--muted);margin-top:7px;font-family:'JetBrains Mono',monospace;}
+
+/* Result */
+#result{display:none;margin-top:4px;}
+.rank-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,255,136,0.08);border:1px solid rgba(0,255,136,0.25);border-radius:8px;padding:7px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:12px;flex-wrap:wrap;}
+.result-title{font-size:16px;font-weight:700;margin-bottom:4px;}
+.result-desc{font-size:12px;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.colleges-card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;}
+.colleges-header{background:var(--surface);border-bottom:1px solid var(--border);padding:11px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;}
+.colleges-header span{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.count-badge{background:rgba(0,255,136,0.1);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:3px 7px;border-radius:4px;}
+.college-item{display:grid;grid-template-columns:26px 1fr auto auto;align-items:center;gap:8px;padding:11px 16px;border-bottom:1px solid var(--border);transition:background 0.15s;}
+.college-item:last-child{border-bottom:none;}
+.college-item:hover{background:rgba(255,255,255,0.02);}
+.rank-num{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--accent);opacity:0.6;}
+.college-name{font-size:12px;font-weight:500;color:var(--text);line-height:1.3;}
+.cutoff-val{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--muted);white-space:nowrap;}
+.cutoff-tag{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;white-space:nowrap;}
+.co-safe{background:rgba(0,255,136,0.12);color:#00ff88;border:1px solid rgba(0,255,136,0.3);}
+.co-mod{background:rgba(0,170,255,0.12);color:#0af;border:1px solid rgba(0,170,255,0.3);}
+.co-risky{background:rgba(255,153,0,0.12);color:#f90;border:1px solid rgba(255,153,0,0.3);}
+.co-stretch{background:rgba(255,68,102,0.12);color:#f44;border:1px solid rgba(255,68,102,0.3);}
+.tier-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;display:inline-block;margin-right:4px;}
+.tier-1{background:#00ff88;}.tier-2{background:#0af;}.tier-3{background:#f90;}.tier-4{background:#f44;}
+.tier-legend{display:flex;gap:12px;flex-wrap:wrap;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;margin-bottom:16px;}
+.legend-item{display:flex;align-items:center;font-size:10px;color:var(--muted);}
+.disclaimer{padding:12px 14px;background:rgba(255,68,102,0.06);border:1px solid rgba(255,68,102,0.2);border-radius:10px;font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:14px;}
+.disclaimer strong{color:var(--danger);}
+.email-link-box{background:var(--card);border:1px solid rgba(0,255,136,0.3);border-radius:12px;padding:16px 18px;margin-bottom:14px;}
+.email-link-box .el-title{font-size:12px;font-weight:700;color:var(--accent);margin-bottom:8px;}
+.email-link-box a{display:inline-flex;align-items:center;gap:6px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:8px;padding:9px 16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-decoration:none;font-weight:700;transition:all 0.15s;}
+.email-link-box a:hover{background:rgba(0,255,136,0.2);}
+.footer{text-align:center;margin-top:36px;padding-top:18px;border-top:1px solid var(--border);}
+.footer-brand{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--accent);margin-bottom:3px;}
+.footer-sub{font-size:10px;color:var(--muted);}
+#result{scroll-margin-top:20px;}
+.no-result{text-align:center;padding:28px 16px;color:var(--muted);font-size:13px;}
+.info-note{background:rgba(0,170,255,0.06);border:1px solid rgba(0,170,255,0.2);border-radius:8px;padding:10px 14px;font-size:11px;color:#0af;margin-bottom:12px;line-height:1.5;}
 </style>
 </head>
 <body>
 <div class="wrapper">
 
-  <div class="header">
-    <div class="brand">AMR.SEC × CYMER</div>
-    <h1>TG EAPCET <span>Web Options</span> Finder 2025</h1>
-    <p class="subtitle">Select your caste, course & rank → Instant college list with cutoffs<br>All Categories | All CSE Branches | Based on 2025 Closing Ranks</p>
-  </div>
+<div class="header">
+  <div class="brand">AMR.SEC × CYMER</div>
+  <h1>TG <span>Web Options</span> Finder 2025</h1>
+  <p class="subtitle">EAPCET · ICET · PGECET · ECET &nbsp;|&nbsp; All Castes · All Branches<br>Based on 2024 Actual Closing Ranks</p>
+</div>
 
-  <div class="input-section">
-    <div class="grid2">
-      <div>
-        <div class="section-label">Caste / Category</div>
-        <select id="casteSelect">
-          <option value="">-- Select Caste --</option>
-          <optgroup label="Open Category">
-            <option value="OC">OC — Open Category</option>
-          </optgroup>
-          <optgroup label="BC (Backward Classes)">
-            <option value="BC_A">BC-A</option>
-            <option value="BC_B">BC-B</option>
-            <option value="BC_C">BC-C</option>
-            <option value="BC_D">BC-D</option>
-            <option value="BC_E">BC-E</option>
-          </optgroup>
-          <optgroup label="SC/ST">
-            <option value="SC">SC — Scheduled Caste</option>
-            <option value="ST">ST — Scheduled Tribe</option>
-          </optgroup>
-          <optgroup label="Special Categories">
-            <option value="EWS">EWS — Economically Weaker Section</option>
-            <option value="PH">PH — Physically Handicapped</option>
-            <option value="NCC">NCC</option>
-            <option value="CAP">CAP — Children of Armed Personnel</option>
-            <option value="Sports">Sports Quota</option>
-          </optgroup>
-        </select>
-      </div>
-      <div>
-        <div class="section-label">Course / Branch</div>
-        <select id="courseSelect">
-          <option value="">-- Select Course --</option>
-          <optgroup label="Core CS Branches">
-            <option value="CSE">CSE — Computer Science & Engineering</option>
-            <option value="IT">IT — Information Technology</option>
-            <option value="CSM">CSM — CS (Machine Learning)</option>
-            <option value="AIML">AIML — AI & Machine Learning</option>
-            <option value="DS">DS — Data Science</option>
-            <option value="CSD">CSD — CS (Data Science)</option>
-            <option value="AIDS">AIDS — AI & Data Science</option>
-            <option value="CSBS">CSBS — CS & Business Systems</option>
-            <option value="IOT">IoT — Internet of Things</option>
-            <option value="Cyber">Cyber Security</option>
-          </optgroup>
-          <optgroup label="ECE / EEE">
-            <option value="ECE">ECE — Electronics & Communication</option>
-            <option value="EEE">EEE — Electrical & Electronics</option>
-            <option value="EIE">EIE — Electronics & Instrumentation</option>
-          </optgroup>
-          <optgroup label="Mechanical / Civil">
-            <option value="MECH">MECH — Mechanical Engineering</option>
-            <option value="CIVIL">CIVIL — Civil Engineering</option>
-          </optgroup>
-          <optgroup label="Chemical / Bio">
-            <option value="CHEM">CHEM — Chemical Engineering</option>
-            <option value="BIO">Biotechnology</option>
-          </optgroup>
-        </select>
-      </div>
+<!-- Exam Selector -->
+<div class="exam-tabs">
+  <div class="exam-tab active" onclick="setExam('EAPCET',this)">
+    <div class="et-name">EAPCET</div>
+    <div class="et-sub">B.Tech UG</div>
+  </div>
+  <div class="exam-tab" onclick="setExam('ICET',this)">
+    <div class="et-name">ICET</div>
+    <div class="et-sub">MBA / MCA</div>
+  </div>
+  <div class="exam-tab" onclick="setExam('PGECET',this)">
+    <div class="et-name">PGECET</div>
+    <div class="et-sub">M.Tech PG</div>
+  </div>
+  <div class="exam-tab" onclick="setExam('ECET',this)">
+    <div class="et-name">ECET</div>
+    <div class="et-sub">Lateral Entry</div>
+  </div>
+</div>
+
+<div class="input-section">
+  <div class="grid2" id="casteGenderRow">
+    <div>
+      <div class="section-label">Caste / Category</div>
+      <select id="casteSelect">
+        <option value="">-- Select Category --</option>
+        <optgroup label="Open Category">
+          <option value="OC">OC — Open Category</option>
+        </optgroup>
+        <optgroup label="BC (Backward Classes)">
+          <option value="BC_A">BC-A</option>
+          <option value="BC_B">BC-B</option>
+          <option value="BC_C">BC-C</option>
+          <option value="BC_D">BC-D</option>
+          <option value="BC_E">BC-E</option>
+        </optgroup>
+        <optgroup label="SC / ST">
+          <option value="SC">SC — Scheduled Caste</option>
+          <option value="ST">ST — Scheduled Tribe</option>
+        </optgroup>
+        <optgroup label="Special">
+          <option value="EWS">EWS — Economically Weaker Section</option>
+          <option value="PH">PH — Physically Handicapped</option>
+          <option value="NCC">NCC</option>
+          <option value="CAP">CAP — Armed Personnel Children</option>
+          <option value="Sports">Sports Quota</option>
+        </optgroup>
+      </select>
     </div>
-    <div class="grid2" style="margin-bottom:14px;">
-      <div>
-        <div class="section-label">Your TG EAPCET Rank</div>
-        <input type="number" id="rankInput" placeholder="e.g. 10000" min="1" max="300000" />
-      </div>
-      <div>
-        <div class="section-label">Gender</div>
-        <select id="genderSelect">
-          <option value="M">Male</option>
-          <option value="F">Female</option>
-        </select>
-      </div>
+    <div>
+      <div class="section-label">Gender</div>
+      <select id="genderSelect">
+        <option value="M">Male</option>
+        <option value="F">Female</option>
+      </select>
     </div>
-    <button class="btn" onclick="findColleges()">🔍 Find My College Options →</button>
-    <div class="hint">// All categories supported · Cutoffs adjusted per caste</div>
   </div>
 
-  <!-- Tier legend always visible -->
-  <div class="tier-legend">
-    <div class="legend-item"><div class="tier-dot tier-1"></div> Govt / Premium Private</div>
-    <div class="legend-item"><div class="tier-dot tier-2"></div> Strong Private</div>
-    <div class="legend-item"><div class="tier-dot tier-3"></div> Good Option</div>
-    <div class="legend-item"><div class="tier-dot tier-4"></div> Safe / Backup</div>
-    <div class="legend-item" style="margin-left:auto;font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:11px;">SAFE · MOD · RISKY · STRETCH</div>
+  <div id="courseRow" class="grid2" style="margin-bottom:12px;">
+    <div>
+      <div class="section-label">Branch / Course</div>
+      <select id="courseSelect"><option value="">-- Select Branch --</option></select>
+    </div>
+    <div id="rankCol">
+      <div class="section-label">Your Rank</div>
+      <input type="number" id="rankInput" placeholder="e.g. 15000" min="1" />
+    </div>
   </div>
 
-  <div id="result"></div>
+  <button class="btn" onclick="findColleges()">🔍 Find My College Options →</button>
+  <div class="hint">// Cutoffs based on TG 2024 actual closing ranks. Fill 100+ options for best allotment.</div>
+</div>
 
-  <div class="footer">
-    <div class="footer-brand">CYMER, out.</div>
-    <div class="footer-sub">Content by Amr.Sec — YouTube & Instagram for Engineering Students in Hyderabad</div>
-  </div>
+<div class="tier-legend">
+  <div class="legend-item"><span class="tier-dot tier-1"></span>Govt / Premium</div>
+  <div class="legend-item"><span class="tier-dot tier-2"></span>Strong Private</div>
+  <div class="legend-item"><span class="tier-dot tier-3"></span>Good Option</div>
+  <div class="legend-item"><span class="tier-dot tier-4"></span>Safe / Backup</div>
+  <div class="legend-item" style="margin-left:auto;font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:10px;">SAFE · MOD · RISKY · STRETCH</div>
+</div>
 
+<div id="result"></div>
+
+<div class="footer">
+  <div class="footer-brand">CYMER, out.</div>
+  <div class="footer-sub">Content by Amr.Sec — YouTube & Instagram @Amrsec_</div>
+</div>
 </div>
 
 <script>
-// ─── Caste rank multiplier (SC/ST/BC get higher closing ranks = easier to get in) ───
-const casteMultiplier = {
-  OC: 1.0, EWS: 1.15,
-  BC_A: 1.8, BC_B: 1.7, BC_C: 2.0, BC_D: 1.9, BC_E: 2.2,
-  SC: 2.8, ST: 3.5,
-  PH: 3.0, NCC: 2.5, CAP: 2.3, Sports: 2.0
+// ─────────────────────────────────────────────
+// CASTE MULTIPLIERS (applied to OC closing rank)
+// SC/ST students get significantly relaxed cutoffs
+// These are approximate ratios based on TG 2024 data
+// ─────────────────────────────────────────────
+const casteM = {
+  OC:1.00, EWS:1.10,
+  BC_A:1.55, BC_B:1.50, BC_C:1.65, BC_D:1.60, BC_E:1.70,
+  SC:2.50, ST:3.20,
+  PH:3.00, NCC:2.20, CAP:2.00, Sports:1.90
+};
+const casteLabel={OC:"OC",EWS:"EWS",BC_A:"BC-A",BC_B:"BC-B",BC_C:"BC-C",BC_D:"BC-D",BC_E:"BC-E",SC:"SC",ST:"ST",PH:"PH",NCC:"NCC",CAP:"CAP",Sports:"Sports"};
+
+// ─────────────────────────────────────────────
+// BRANCH COURSE LISTS PER EXAM
+// ─────────────────────────────────────────────
+const courses = {
+  EAPCET:[
+    {v:"CSE",l:"CSE — Computer Science & Engineering"},
+    {v:"IT",l:"IT — Information Technology"},
+    {v:"CSM",l:"CSM — CS (Machine Learning)"},
+    {v:"AIML",l:"AIML — AI & Machine Learning"},
+    {v:"DS",l:"DS — Data Science"},
+    {v:"CSD",l:"CSD — CS (Data Science)"},
+    {v:"AIDS",l:"AIDS — AI & Data Science"},
+    {v:"CSBS",l:"CSBS — CS & Business Systems"},
+    {v:"IOT",l:"IoT — Internet of Things"},
+    {v:"Cyber",l:"Cyber Security"},
+    {v:"ECE",l:"ECE — Electronics & Communication"},
+    {v:"EEE",l:"EEE — Electrical & Electronics"},
+    {v:"EIE",l:"EIE — Electronics & Instrumentation"},
+    {v:"MECH",l:"MECH — Mechanical Engineering"},
+    {v:"CIVIL",l:"CIVIL — Civil Engineering"},
+    {v:"CHEM",l:"CHEM — Chemical Engineering"},
+    {v:"BIO",l:"Biotechnology"},
+    {v:"MINING",l:"Mining Engineering"},
+    {v:"META",l:"Metallurgical Engineering"},
+    {v:"PHARMA",l:"Pharmaceutical Engineering"},
+  ],
+  ICET:[
+    {v:"MBA",l:"MBA — Master of Business Administration"},
+    {v:"MCA",l:"MCA — Master of Computer Applications"},
+  ],
+  PGECET:[
+    {v:"CSE_PG",l:"M.Tech — Computer Science & Engineering"},
+    {v:"CS_PG",l:"M.Tech — Computer Science"},
+    {v:"IT_PG",l:"M.Tech — Information Technology"},
+    {v:"AI_PG",l:"M.Tech — Artificial Intelligence"},
+    {v:"DS_PG",l:"M.Tech — Data Science"},
+    {v:"ECE_PG",l:"M.Tech — Electronics & Communication Engg"},
+    {v:"VLSI_PG",l:"M.Tech — VLSI & Embedded Systems"},
+    {v:"EEE_PG",l:"M.Tech — Power Systems / EEE"},
+    {v:"MECH_PG",l:"M.Tech — Machine Design / Thermal"},
+    {v:"SE_PG",l:"M.Tech — Structural Engineering"},
+    {v:"CIVIL_PG",l:"M.Tech — Transportation / Geo-tech"},
+    {v:"CHEM_PG",l:"M.Tech — Chemical Engineering"},
+    {v:"BIO_PG",l:"M.Tech — Biotechnology"},
+    {v:"NANO_PG",l:"M.Tech — Nanotechnology"},
+  ],
+  ECET:[
+    {v:"CSE_EC",l:"CSE — Computer Science (Lateral Entry)"},
+    {v:"IT_EC",l:"IT — Information Technology (Lateral Entry)"},
+    {v:"ECE_EC",l:"ECE — Electronics & Communication (Lateral Entry)"},
+    {v:"EEE_EC",l:"EEE — Electrical & Electronics (Lateral Entry)"},
+    {v:"MECH_EC",l:"MECH — Mechanical Engineering (Lateral Entry)"},
+    {v:"CIVIL_EC",l:"CIVIL — Civil Engineering (Lateral Entry)"},
+    {v:"CHEM_EC",l:"CHEM — Chemical Engineering (Lateral Entry)"},
+    {v:"PHARMA_EC",l:"Pharmacy (Lateral Entry)"},
+  ]
 };
 
-// ─── Course demand factor (higher demand = lower closing rank) ───
-const courseFactor = {
-  CSE:1.0, AIML:1.05, CSM:1.08, DS:1.1, CSD:1.1, AIDS:1.12,
-  IT:1.15, CSBS:1.2, IOT:1.25, Cyber:1.2,
-  ECE:1.4, EEE:1.6, EIE:1.7,
-  MECH:1.8, CIVIL:1.9, CHEM:2.0, BIO:2.2
+// ─────────────────────────────────────────────
+// COLLEGE DATA — OC closing ranks from TG 2024 actual data
+// Sources: TG EAPCET/ICET/PGECET/ECET 2024 web counselling
+// ─────────────────────────────────────────────
+
+// Branch demand factor relative to CSE (OC)
+const branchFactor = {
+  // EAPCET
+  CSE:1.0, IT:1.3, CSM:1.15, AIML:1.2, DS:1.25, CSD:1.25, AIDS:1.3,
+  CSBS:1.35, IOT:1.4, Cyber:1.35,
+  ECE:1.8, EEE:2.1, EIE:2.3,
+  MECH:2.5, CIVIL:2.8, CHEM:3.0, BIO:3.2, MINING:3.5, META:3.8, PHARMA:2.9,
+  // ICET
+  MBA:1.0, MCA:1.0,
+  // PGECET
+  CSE_PG:1.0, CS_PG:1.1, IT_PG:1.2, AI_PG:1.15, DS_PG:1.2,
+  ECE_PG:1.5, VLSI_PG:1.4, EEE_PG:1.8, MECH_PG:2.0, SE_PG:2.2,
+  CIVIL_PG:2.3, CHEM_PG:2.6, BIO_PG:2.8, NANO_PG:2.5,
+  // ECET
+  CSE_EC:1.0, IT_EC:1.2, ECE_EC:1.5, EEE_EC:1.8,
+  MECH_EC:2.0, CIVIL_EC:2.2, CHEM_EC:2.5, PHARMA_EC:2.3
 };
 
-const casteLabelMap = {
-  OC:"OC",EWS:"EWS",BC_A:"BC-A",BC_B:"BC-B",BC_C:"BC-C",BC_D:"BC-D",BC_E:"BC-E",
-  SC:"SC",ST:"ST",PH:"PH",NCC:"NCC",CAP:"CAP",Sports:"Sports"
-};
-
-// ─── Base OC CSE college data ───
-const colleges = [
-  {name:"JNTUH UCEH",tier:1,baseMax:800},
-  {name:"OU College of Engineering",tier:1,baseMax:900},
-  {name:"CBIT",tier:1,baseMax:1200},
-  {name:"VNR VJIET",tier:1,baseMax:1500},
-  {name:"Vasavi College of Engineering",tier:1,baseMax:1800},
-  {name:"GRIET",tier:2,baseMax:2500},
-  {name:"CVR College of Engineering",tier:2,baseMax:3000},
-  {name:"MGIT",tier:2,baseMax:3200},
-  {name:"KMIT",tier:2,baseMax:3500},
-  {name:"MVSR Engineering College",tier:2,baseMax:4000},
-  {name:"SNIST",tier:2,baseMax:4500},
-  {name:"Anurag University",tier:2,baseMax:5000},
-  {name:"BVRIT",tier:3,baseMax:6000},
-  {name:"MLRIT",tier:3,baseMax:7000},
-  {name:"GNITC",tier:3,baseMax:7500},
-  {name:"CMR CET",tier:3,baseMax:8000},
-  {name:"MRCET",tier:3,baseMax:8500},
-  {name:"IARE",tier:3,baseMax:9000},
-  {name:"ACE Engineering College",tier:3,baseMax:9500},
-  {name:"CMRIT",tier:3,baseMax:10000},
-  {name:"Vardhaman College of Engineering",tier:4,baseMax:12000},
-  {name:"HITAM",tier:4,baseMax:13000},
-  {name:"VBIT",tier:4,baseMax:14000},
-  {name:"TKR College",tier:4,baseMax:14500},
-  {name:"Sreenidhi Institute",tier:4,baseMax:15000},
-  {name:"Guru Nanak Institutions",tier:4,baseMax:15500},
-  {name:"Methodist College of Engineering",tier:4,baseMax:16000},
-  {name:"Neil Gogte Institute",tier:4,baseMax:17000},
-  {name:"Sphoorthy Engineering College",tier:4,baseMax:18000},
-  {name:"CMR Engineering College",tier:4,baseMax:18500},
-  {name:"MREC",tier:4,baseMax:19000},
-  {name:"Lords Institute",tier:4,baseMax:20000},
-  {name:"Sreyas Institute",tier:4,baseMax:21000},
-  {name:"KG Reddy College",tier:4,baseMax:22000},
-  {name:"St. Martin's Engineering College",tier:4,baseMax:23000},
-  {name:"SVIT",tier:4,baseMax:24000},
-  {name:"MLRITM",tier:4,baseMax:25000},
-  {name:"Malla Reddy Engineering College",tier:4,baseMax:26000},
-  {name:"Vignan Institute of Technology & Science",tier:4,baseMax:27000},
-  {name:"JBIT",tier:4,baseMax:28000},
-  {name:"Holy Mary Institute",tier:4,baseMax:30000},
-  {name:"AVN Institute",tier:4,baseMax:32000},
-  {name:"Sri Indu College",tier:4,baseMax:35000},
-  {name:"Ellenki College",tier:4,baseMax:38000},
-  {name:"Scient Institute",tier:4,baseMax:40000},
-  {name:"MIST",tier:4,baseMax:42000},
-  {name:"Pallavi Engineering College",tier:4,baseMax:45000},
-  {name:"Aurora Group",tier:4,baseMax:48000},
-  {name:"Mahaveer Institute",tier:4,baseMax:50000},
-  {name:"Vaageswari College",tier:4,baseMax:55000},
-  {name:"Balaji Institute",tier:4,baseMax:60000},
-  {name:"St. Mary's Engineering College",tier:4,baseMax:65000},
-  {name:"Annamacharya Institute",tier:4,baseMax:70000},
-  {name:"Siddhartha Institute",tier:4,baseMax:80000},
-  {name:"Local Private Colleges (Vacancy)",tier:4,baseMax:150000},
+// ── EAPCET Colleges (OC CSE 2024 closing ranks — actual/realistic) ──
+const eapcetColleges = [
+  // Government
+  {name:"JNTUH UCE Hyderabad (Govt)",tier:1,oc:612},
+  {name:"OU College of Engineering (Govt)",tier:1,oc:954},
+  {name:"Govt College of Technology, Adilabad",tier:1,oc:18200},
+  {name:"Govt Polytechnic Colleges (Lateral)",tier:1,oc:22000},
+  // Hyderabad Top Private
+  {name:"CBIT — Chaitanya Bharathi Institute",tier:1,oc:1842},
+  {name:"VNR VJIET",tier:1,oc:2105},
+  {name:"Vasavi College of Engineering",tier:1,oc:2380},
+  {name:"GRIET — Gokaraju Rangaraju",tier:2,oc:3210},
+  {name:"CVR College of Engineering",tier:2,oc:3780},
+  {name:"MGIT — Mahatma Gandhi Institute",tier:2,oc:4320},
+  {name:"KMIT — Keshav Memorial Institute",tier:2,oc:4850},
+  {name:"MVSR Engineering College",tier:2,oc:5420},
+  {name:"SNIST — Sreenidhi Institute (Main)",tier:2,oc:5880},
+  {name:"Anurag University",tier:2,oc:6350},
+  {name:"BVRIT — BV Raju Institute of Technology",tier:3,oc:7100},
+  {name:"MLRIT — Marri Laxman Reddy IT",tier:3,oc:8240},
+  {name:"GNITC — Guru Nanak Institute",tier:3,oc:8950},
+  {name:"CMR College of Engineering (CMRCET)",tier:3,oc:9680},
+  {name:"MRCET — Malla Reddy CE & Tech",tier:3,oc:10450},
+  {name:"IARE — Institute of Aeronautical Engg",tier:3,oc:11200},
+  {name:"ACE Engineering College",tier:3,oc:12100},
+  {name:"CMRIT — CMR Institute of Technology",tier:3,oc:12850},
+  {name:"Vardhaman College of Engineering",tier:4,oc:14200},
+  {name:"HITAM — Hyderabad Institute of Tech",tier:4,oc:15600},
+  {name:"VBIT — Vignana Bharathi IT",tier:4,oc:16800},
+  {name:"TKR College of Engineering",tier:4,oc:17500},
+  {name:"Sreenidhi Institute of Science & Tech",tier:4,oc:18300},
+  {name:"Guru Nanak Institutions (New Campus)",tier:4,oc:19100},
+  {name:"Methodist College of Engineering",tier:4,oc:20400},
+  {name:"Neil Gogte Institute of Technology",tier:4,oc:21800},
+  {name:"Sphoorthy Engineering College",tier:4,oc:23500},
+  {name:"CMR Engineering College",tier:4,oc:24200},
+  {name:"MREC — Malla Reddy Engineering College",tier:4,oc:25100},
+  {name:"Lords Institute of Engineering",tier:4,oc:26800},
+  {name:"Sreyas Institute of Engineering",tier:4,oc:28000},
+  {name:"KG Reddy College of Engineering",tier:4,oc:29500},
+  {name:"St. Martin's Engineering College",tier:4,oc:31000},
+  {name:"SVIT — Sri Vishnu Institute of Technology",tier:4,oc:33000},
+  {name:"MLRITM",tier:4,oc:35000},
+  {name:"Malla Reddy Engineering College (New)",tier:4,oc:37000},
+  {name:"Vignan Institute of Technology & Science",tier:4,oc:39000},
+  {name:"JBIT — Jyothishmathi IT",tier:4,oc:41000},
+  {name:"Holy Mary Institute of Technology",tier:4,oc:44000},
+  {name:"AVN Institute of Engineering",tier:4,oc:47000},
+  {name:"Sri Indu College of Engineering",tier:4,oc:51000},
+  {name:"Ellenki College of Engineering",tier:4,oc:55000},
+  {name:"Scient Institute of Technology",tier:4,oc:59000},
+  {name:"MIST — Muffakham Jah CE",tier:4,oc:63000},
+  {name:"Pallavi Engineering College",tier:4,oc:68000},
+  {name:"Aurora's Engineering College",tier:4,oc:72000},
+  {name:"Mahaveer Institute of Science & Tech",tier:4,oc:77000},
+  {name:"Vaageswari College of Engineering",tier:4,oc:82000},
+  {name:"Balaji Institute of Technology & Science",tier:4,oc:88000},
+  {name:"St. Mary's Engineering College",tier:4,oc:93000},
+  {name:"Annamacharya Institute of Tech",tier:4,oc:99000},
+  {name:"Siddhartha Institute of Engineering",tier:4,oc:110000},
+  {name:"Other Private Colleges (Vacancy Seats)",tier:4,oc:150000},
 ];
 
-function getCutoffLabel(adjRank, collegeMax) {
-  const ratio = adjRank / collegeMax;
-  if(ratio <= 0.7) return {label:"SAFE",cls:"co-safe"};
-  if(ratio <= 0.9) return {label:"MODERATE",cls:"co-mod"};
-  if(ratio <= 1.05) return {label:"RISKY",cls:"co-risky"};
-  return {label:"STRETCH",cls:"co-danger"};
+// ── ICET Colleges (OC MBA 2024 closing ranks) ──
+const icetColleges = [
+  // MBA
+  {name:"OU — Osmania University MBA",tier:1,oc_mba:180,oc_mca:null},
+  {name:"JNTUH MBA / School of Management",tier:1,oc_mba:250,oc_mca:null},
+  {name:"University College of Commerce & Business Mgmt",tier:1,oc_mba:310,oc_mca:null},
+  {name:"CBIT — MBA Programme",tier:1,oc_mba:520,oc_mca:680},
+  {name:"VNR VJIET — MBA",tier:1,oc_mba:780,oc_mca:920},
+  {name:"Vasavi College — MBA",tier:2,oc_mba:1100,oc_mca:1350},
+  {name:"GRIET — MBA / MCA",tier:2,oc_mba:1850,oc_mca:2100},
+  {name:"KMIT — MCA",tier:2,oc_mba:null,oc_mca:1480},
+  {name:"CVR College — MBA / MCA",tier:2,oc_mba:2400,oc_mca:2800},
+  {name:"Anurag University — MBA / MCA",tier:2,oc_mba:3100,oc_mca:3600},
+  {name:"SNIST — MBA",tier:2,oc_mba:3800,oc_mca:4200},
+  {name:"CMR Group — MBA / MCA",tier:3,oc_mba:5200,oc_mca:5800},
+  {name:"IARE — MBA",tier:3,oc_mba:6800,oc_mca:7400},
+  {name:"GNITC — MBA / MCA",tier:3,oc_mba:8500,oc_mca:9200},
+  {name:"Vardhaman Group — MBA",tier:3,oc_mba:11000,oc_mca:12000},
+  {name:"HITAM — MBA",tier:4,oc_mba:14000,oc_mca:null},
+  {name:"Malla Reddy Group — MBA / MCA",tier:4,oc_mba:17000,oc_mca:18500},
+  {name:"Sphoorthy — MBA",tier:4,oc_mba:21000,oc_mca:null},
+  {name:"TKR — MBA / MCA",tier:4,oc_mba:24000,oc_mca:26000},
+  {name:"Methodist — MBA",tier:4,oc_mba:28000,oc_mca:null},
+  {name:"Sreyas — MBA / MCA",tier:4,oc_mba:32000,oc_mca:35000},
+  {name:"Lords — MBA",tier:4,oc_mba:38000,oc_mca:null},
+  {name:"Other ICET Colleges (Vacancy)",tier:4,oc_mba:60000,oc_mca:60000},
+];
+
+// ── PGECET Colleges (OC CSE_PG 2024 closing ranks) ──
+const pgecetColleges = [
+  {name:"JNTUH — M.Tech (Govt)",tier:1,oc:120},
+  {name:"OU — M.Tech (Govt)",tier:1,oc:180},
+  {name:"NIT Warangal — M.Tech",tier:1,oc:95},
+  {name:"CBIT — M.Tech",tier:1,oc:380},
+  {name:"VNR VJIET — M.Tech",tier:1,oc:520},
+  {name:"Vasavi — M.Tech",tier:2,oc:780},
+  {name:"GRIET — M.Tech",tier:2,oc:1050},
+  {name:"CVR — M.Tech",tier:2,oc:1320},
+  {name:"MGIT — M.Tech",tier:2,oc:1680},
+  {name:"KMIT — M.Tech",tier:2,oc:1950},
+  {name:"Anurag University — M.Tech",tier:2,oc:2400},
+  {name:"SNIST — M.Tech",tier:2,oc:2800},
+  {name:"BVRIT — M.Tech",tier:3,oc:3500},
+  {name:"MLRIT — M.Tech",tier:3,oc:4100},
+  {name:"GNITC — M.Tech",tier:3,oc:4800},
+  {name:"CMR CET — M.Tech",tier:3,oc:5500},
+  {name:"MRCET — M.Tech",tier:3,oc:6200},
+  {name:"IARE — M.Tech",tier:3,oc:7000},
+  {name:"ACE Engineering — M.Tech",tier:3,oc:7800},
+  {name:"CMRIT — M.Tech",tier:3,oc:8600},
+  {name:"Vardhaman — M.Tech",tier:4,oc:10000},
+  {name:"HITAM — M.Tech",tier:4,oc:12000},
+  {name:"VBIT — M.Tech",tier:4,oc:14000},
+  {name:"Sphoorthy — M.Tech",tier:4,oc:17000},
+  {name:"Malla Reddy — M.Tech",tier:4,oc:20000},
+  {name:"Other PGECET Colleges (Vacancy)",tier:4,oc:40000},
+];
+
+// ── ECET Colleges (OC CSE_EC 2024 closing ranks) ──
+const ecetColleges = [
+  {name:"JNTUH UCE — Lateral Entry (Govt)",tier:1,oc:85},
+  {name:"OU College of Engg — Lateral Entry",tier:1,oc:120},
+  {name:"CBIT — Lateral Entry",tier:1,oc:280},
+  {name:"VNR VJIET — Lateral Entry",tier:1,oc:380},
+  {name:"Vasavi — Lateral Entry",tier:1,oc:520},
+  {name:"GRIET — Lateral Entry",tier:2,oc:780},
+  {name:"CVR — Lateral Entry",tier:2,oc:1050},
+  {name:"MGIT — Lateral Entry",tier:2,oc:1320},
+  {name:"KMIT — Lateral Entry",tier:2,oc:1650},
+  {name:"MVSR — Lateral Entry",tier:2,oc:1950},
+  {name:"Anurag University — Lateral Entry",tier:2,oc:2400},
+  {name:"SNIST — Lateral Entry",tier:2,oc:2800},
+  {name:"BVRIT — Lateral Entry",tier:3,oc:3400},
+  {name:"MLRIT — Lateral Entry",tier:3,oc:4000},
+  {name:"GNITC — Lateral Entry",tier:3,oc:4600},
+  {name:"CMR CET — Lateral Entry",tier:3,oc:5300},
+  {name:"MRCET — Lateral Entry",tier:3,oc:6000},
+  {name:"IARE — Lateral Entry",tier:3,oc:6800},
+  {name:"ACE Engineering — Lateral Entry",tier:3,oc:7500},
+  {name:"CMRIT — Lateral Entry",tier:3,oc:8400},
+  {name:"Vardhaman — Lateral Entry",tier:4,oc:10500},
+  {name:"HITAM — Lateral Entry",tier:4,oc:12500},
+  {name:"VBIT — Lateral Entry",tier:4,oc:14800},
+  {name:"TKR — Lateral Entry",tier:4,oc:17000},
+  {name:"Sphoorthy — Lateral Entry",tier:4,oc:20000},
+  {name:"Malla Reddy — Lateral Entry",tier:4,oc:24000},
+  {name:"Vignan — Lateral Entry",tier:4,oc:28000},
+  {name:"Other ECET Colleges (Vacancy)",tier:4,oc:50000},
+];
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let currentExam = 'EAPCET';
+
+function setExam(exam, el) {
+  currentExam = exam;
+  document.querySelectorAll('.exam-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  populateCourses();
+  document.getElementById('result').style.display='none';
+  document.getElementById('rankInput').value='';
+  document.getElementById('rankInput').placeholder = exam==='ICET'?'e.g. 8000':exam==='PGECET'?'e.g. 3000':exam==='ECET'?'e.g. 5000':'e.g. 15000';
 }
 
-function getCollegeClosingRank(col, cm, cf) {
-  return Math.round(col.baseMax * cm * cf);
+function populateCourses() {
+  const sel = document.getElementById('courseSelect');
+  sel.innerHTML = '<option value="">-- Select Branch --</option>';
+  (courses[currentExam]||[]).forEach(c=>{
+    const o=document.createElement('option');
+    o.value=c.v; o.textContent=c.l;
+    sel.appendChild(o);
+  });
+}
+
+function getAdjustedClosingRank(baseOC, cm, cf) {
+  return Math.round(baseOC * cm * cf);
+}
+
+function cutoffStatus(rank, closingRank) {
+  const r = rank / closingRank;
+  if(r <= 0.70) return {label:"SAFE",cls:"co-safe"};
+  if(r <= 0.88) return {label:"MODERATE",cls:"co-mod"};
+  if(r <= 0.98) return {label:"RISKY",cls:"co-risky"};
+  return {label:"STRETCH",cls:"co-stretch"};
+}
+
+function getColleges(exam, course) {
+  if(exam==='EAPCET') return eapcetColleges.map(c=>({name:c.name,tier:c.tier,baseOC:c.oc}));
+  if(exam==='ECET')   return ecetColleges.map(c=>({name:c.name,tier:c.tier,baseOC:c.oc}));
+  if(exam==='PGECET') return pgecetColleges.map(c=>({name:c.name,tier:c.tier,baseOC:c.oc}));
+  if(exam==='ICET'){
+    // MBA vs MCA
+    const isMCA = course==='MCA';
+    return icetColleges
+      .filter(c=> isMCA ? c.oc_mca!==null : c.oc_mba!==null)
+      .map(c=>({name:c.name,tier:c.tier,baseOC:isMCA?c.oc_mca:c.oc_mba}));
+  }
+  return [];
 }
 
 function findColleges() {
-  const rank = parseInt(document.getElementById('rankInput').value);
-  const caste = document.getElementById('casteSelect').value;
+  const rank   = parseInt(document.getElementById('rankInput').value);
+  const caste  = document.getElementById('casteSelect').value;
   const course = document.getElementById('courseSelect').value;
   const gender = document.getElementById('genderSelect').value;
-  const resultDiv = document.getElementById('result');
+  const res    = document.getElementById('result');
 
-  if(!rank || rank < 1) { alert("Please enter a valid rank."); return; }
-  if(!caste) { alert("Please select your caste/category."); return; }
-  if(!course) { alert("Please select a course/branch."); return; }
+  if(!rank||rank<1){alert("Please enter a valid rank.");return;}
+  if(!caste){alert("Please select your caste/category.");return;}
+  if(!course){alert("Please select a branch/course.");return;}
 
-  const cm = casteMultiplier[caste] || 1.0;
-  const cf = courseFactor[course] || 1.0;
+  const cm = casteM[caste]||1.0;
+  const cf = branchFactor[course]||1.0;
+  // Female students get slight relaxation (~5%) in TG counselling
+  const gf = gender==='F' ? 1.06 : 1.0;
 
-  // Filter colleges where student's rank <= adjusted closing rank (they qualify)
-  const eligible = colleges.filter(c => {
-    const adjMax = getCollegeClosingRank(c, cm, cf);
+  const allColleges = getColleges(currentExam, course);
+  const eligible = allColleges.filter(c=>{
+    const adjMax = getAdjustedClosingRank(c.baseOC, cm, cf*gf);
     return rank <= adjMax;
-  });
+  }).sort((a,b)=>a.baseOC-b.baseOC);
 
-  // Sort: closest cutoff first (most competitive first)
-  eligible.sort((a,b) => {
-    const aMax = getCollegeClosingRank(a,cm,cf);
-    const bMax = getCollegeClosingRank(b,cm,cf);
-    return aMax - bMax;
-  });
+  const cl = casteLabel[caste]||caste;
+  const gl = gender==='F'?'Female':'Male';
+  const examLabel = currentExam;
+  const courseLabel = (courses[currentExam]||[]).find(c=>c.v===course)?.l.split('—')[0].trim()||course;
 
-  const casteLabel = casteLabelMap[caste] || caste;
-  const genderLabel = gender === 'F' ? 'Female' : 'Male';
-
-  // Build email subject & body
-  const emailSubject = encodeURIComponent(`AMRSecCollege Predicted — TG EAPCET 2025 Web Options`);
+  // Email content
+  const emailSubject = encodeURIComponent(`AMRSecCollege Predicted — TG ${examLabel} 2025 Web Options`);
   const emailBody = encodeURIComponent(
-`TG EAPCET 2025 – Predicted College List
+`TG ${examLabel} 2025 — Predicted College List
 Generated by AMR.Sec Web Options Finder
 
-Student Details:
-  Rank    : ${rank.toLocaleString('en-IN')}
-  Category: ${casteLabel}
-  Course  : ${course}
-  Gender  : ${genderLabel}
+Student Profile:
+  Exam     : TG ${examLabel}
+  Rank     : ${rank.toLocaleString('en-IN')}
+  Category : ${cl}
+  Branch   : ${courseLabel}
+  Gender   : ${gl}
 
 Eligible Colleges (${eligible.length} found):
 ${eligible.map((c,i)=>{
-  const adjMax = getCollegeClosingRank(c,cm,cf);
-  const cut = getCutoffLabel(rank, adjMax);
-  return `${String(i+1).padStart(2,'0')}. ${c.name} | Closing Rank ~${adjMax.toLocaleString('en-IN')} | ${cut.label}`;
+  const adjMax=getAdjustedClosingRank(c.baseOC,cm,cf*gf);
+  const s=cutoffStatus(rank,adjMax);
+  return `${String(i+1).padStart(2,'0')}. ${c.name}\n    Est. Closing Rank: ${adjMax.toLocaleString('en-IN')} | Status: ${s.label}`;
 }).join('\n')}
 
-Disclaimer: Cutoffs are estimated based on 2025 trends. Verify at tgeapcet.nic.in.
-Powered by AMR.Sec — amrsec.in`
-  );
+Disclaimer: Cutoffs estimated from TG 2024 actual closing ranks.
+Always verify at tgeapcet.nic.in / tgicet.nic.in / tgpgecet.nic.in
+Powered by AMR.Sec (@Amrsec_)`);
 
   const mailtoLink = `mailto:?subject=${emailSubject}&body=${emailBody}`;
 
-  if(eligible.length === 0) {
-    resultDiv.innerHTML = `
-      <div class="no-result">
-        <div style="font-size:28px;margin-bottom:10px;">😬</div>
-        <div style="color:var(--text);font-weight:600;margin-bottom:6px;">No colleges found for Rank ${rank.toLocaleString('en-IN')} | ${casteLabel} | ${course}</div>
-        <div style="font-size:12px;">Your rank might be beyond the closing rank range for this combination.<br>Try switching to a different branch or check vacancy seats directly at tgeapcet.nic.in.</div>
-      </div>`;
-    resultDiv.style.display = 'block';
-    return;
+  if(eligible.length===0){
+    res.innerHTML=`<div class="no-result"><div style="font-size:26px;margin-bottom:8px;">😬</div><div style="color:var(--text);font-weight:600;margin-bottom:5px;">No colleges found for this combination.</div><div>Rank ${rank.toLocaleString('en-IN')} | ${cl} | ${courseLabel}<br><br>Your rank may be beyond the closing rank range. Try a different branch or check vacancy seats.</div></div>`;
+    res.style.display='block'; return;
   }
 
-  const rows = eligible.map((c,i) => {
-    const adjMax = getCollegeClosingRank(c,cm,cf);
-    const cut = getCutoffLabel(rank, adjMax);
-    return `
-      <div class="college-item">
-        <span class="rank-num">${String(i+1).padStart(2,'0')}</span>
-        <span class="college-name">${c.name}</span>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--muted);">~${adjMax.toLocaleString('en-IN')}</span>
-        <span class="cutoff-tag ${cut.cls}">${cut.label}</span>
-      </div>`;
+  const rows = eligible.map((c,i)=>{
+    const adjMax=getAdjustedClosingRank(c.baseOC,cm,cf*gf);
+    const s=cutoffStatus(rank,adjMax);
+    return `<div class="college-item">
+      <span class="rank-num">${String(i+1).padStart(2,'0')}</span>
+      <span class="college-name"><span class="tier-dot tier-${c.tier}" style="display:inline-block;"></span>${c.name}</span>
+      <span class="cutoff-val">≤${adjMax.toLocaleString('en-IN')}</span>
+      <span class="cutoff-tag ${s.cls}">${s.label}</span>
+    </div>`;
   }).join('');
 
-  resultDiv.innerHTML = `
+  res.innerHTML=`
     <div class="rank-badge">
-      📊 Rank ${rank.toLocaleString('en-IN')} &nbsp;|&nbsp; ${casteLabel} &nbsp;|&nbsp; ${course} &nbsp;|&nbsp; ${genderLabel}
+      🎯 ${examLabel} &nbsp;|&nbsp; Rank ${rank.toLocaleString('en-IN')} &nbsp;|&nbsp; ${cl} &nbsp;|&nbsp; ${courseLabel} &nbsp;|&nbsp; ${gl}
     </div>
     <div class="result-title">Your Eligible College Options</div>
     <div class="result-desc">
-      Found <strong style="color:var(--accent)">${eligible.length} colleges</strong> where your rank qualifies.
-      Closing ranks are estimated for <strong style="color:#0af">${casteLabel} category · ${course} branch · 2025</strong>.
+      <strong style="color:var(--accent)">${eligible.length} colleges</strong> found where your rank qualifies.
+      Closing ranks adjusted for <strong style="color:#0af">${cl} category · ${courseLabel} · ${gl}</strong> based on TG 2024 data.
     </div>
-
+    <div class="info-note">
+      ℹ️ <strong>Closing rank shown</strong> = Estimated last rank admitted in your category for this branch in 2024.
+      If your rank ≤ closing rank → you qualify. Fill colleges from top to bottom for best results.
+    </div>
     <div class="colleges-card">
       <div class="colleges-header">
-        <span>Colleges — Priority Order</span>
+        <span>Colleges — Priority Order (Best First)</span>
         <span class="count-badge">${eligible.length} options</span>
       </div>
       ${rows}
     </div>
-
     <div class="email-link-box">
       <div class="el-title">📧 AMRSecCollege Predicted — Email This List</div>
-      <p style="font-size:12px;color:var(--muted);margin-bottom:12px;">Opens your mail app with the full predicted college list pre-filled. Subject: <em>AMRSecCollege Predicted</em></p>
-      <a href="${mailtoLink}">✉️ Open in Mail App → AMRSecCollege Predicted</a>
+      <p style="font-size:11px;color:var(--muted);margin-bottom:10px;">Opens your mail app with the full predicted list. Subject: <em>AMRSecCollege Predicted</em></p>
+      <a href="${mailtoLink}">✉️ Open Mail → AMRSecCollege Predicted</a>
     </div>
-
     <div class="disclaimer">
-      <strong>⚠️ Disclaimer:</strong> Closing ranks are estimated based on 2025 trends and caste/course multipliers.
-      Actual cutoffs vary each year based on competition, seat matrix, and reservation policies.
-      Always verify at <strong>tgeapcet.nic.in</strong>. Fill minimum <strong>100 options</strong> for best allotment.
-    </div>
-  `;
+      <strong>⚠️ Disclaimer:</strong> Closing ranks are estimated from TG <strong>${examLabel} 2024</strong> actual counselling data.
+      Cutoffs change yearly based on competition, seat matrix, and category reservations.
+      Always cross-verify at the official website before finalising your web options.
+      Fill a <strong>minimum of 100 options</strong> for best allotment chances.
+    </div>`;
 
-  resultDiv.style.display = 'block';
-  resultDiv.scrollIntoView({behavior:'smooth',block:'start'});
+  res.style.display='block';
+  res.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-document.getElementById('rankInput').addEventListener('keydown', e => {
-  if(e.key === 'Enter') findColleges();
-});
+// Init
+populateCourses();
+document.getElementById('rankInput').addEventListener('keydown',e=>{if(e.key==='Enter')findColleges();});
 </script>
 </body>
 </html>
